@@ -23,7 +23,7 @@ Size: Market cap (shares outstanding × price on start date)
 ## Universe
 
 Nifty 50 constituents (Yahoo Finance tickers, `.NS` suffix for NSE).  
-**Note:** `TATAMOTORS.NS` was delisted following the Oct 2025 demerger. Use `TMPV.NS` (passenger vehicles) and/or `TMCV.NS` (commercial vehicles) as replacements.
+**Note:** `TATAMOTORS.NS` was delisted following the Oct 2025 demerger. Use `TMPV.NS` (passenger vehicles) and/or `TMCV.NS` (commercial vehicles) as replacements. Due to inconsistencies in data availability with this particular stock, I've removed it from the universe 
 
 ## Data Approach
 
