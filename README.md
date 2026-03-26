@@ -14,7 +14,7 @@ For each of the three factors, the project:
 
 Run it any day and it automatically evaluates the most recent 12-month window.
 
-## Factors
+## Factors 
 
 Momentum: 12-month trailing return ending today 
 Value: P/B ratio (book value per share ÷ price on start date) 
