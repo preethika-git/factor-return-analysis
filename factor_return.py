@@ -218,6 +218,9 @@ ax.set_ylabel("Cumulative Return")
 plt.tight_layout()
 
 # Exporting Results and Charts
+import os
+os.makedirs("output", exist_ok=True)
+
 fig.savefig("output/factor_returns.png", dpi=150, bbox_inches="tight")
 
 with pd.ExcelWriter("output/factor_portfolio.xlsx", engine = "xlsxwriter") as writer:
