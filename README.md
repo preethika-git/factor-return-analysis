@@ -11,7 +11,7 @@ For each of the three factors, the project:
 2. Splits stocks into a top group (long leg) and bottom group (short leg)
 3. Constructs an equal-weighted long-short portfolio
 4. Tracks monthly returns of that portfolio over the past 12 months
-5. Reports a cumulative return chart and Sharpe ratio for each factor
+5. Reports a cumulative return chart, Sharpe ratio, Alpha and Beta for each factor
 
 Run it any day and it automatically evaluates the most recent 12-month window.
 
@@ -49,6 +49,7 @@ All outputs are saved to the `output/` folder:
 - `factor_returns.png` — cumulative monthly return chart for all three factor portfolios
 - `factor_portfolio.xlsx` — Excel workbook with the following sheets:
   - `sharpe_ratios` — annualised Sharpe ratio, portfolio return, long return, and short return for each factor
+  - `alpha_beta` — annualised Alpha and Beta for each factor
   - `size_portfolio` — stock-level positions and returns for the size factor
   - `value_portfolio` — stock-level positions and returns for the value factor
   - `momentum_portfolio` — stock-level positions and returns for the momentum factor
@@ -76,6 +77,7 @@ factor-return-analysis/
 - **Data source:** `yfinance` for both price history and fundamentals
 - **Risk-free rate:** 6.9% p.a. for Sharpe ratio calculation
 - **Sharpe ratio:** Annualised using monthly standard deviation × √12
+- **CAPM regression:** Alpha and beta estimated via OLS regression of monthly portfolio returns against Nifty 50 (^NSEI) monthly returns. Alpha is annualised using (1 + α)^12 - 1
 
 
 ## Setup
