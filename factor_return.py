@@ -179,6 +179,23 @@ sharpe_ratios = pd.DataFrame({
     "Momentum": [mom_sharpe, mom_portfolio_return,  mom_long_return,   mom_short_return]
 }, index=["Sharpe Ratio", "Portfolio Return", "Long Return", "Short Return"]).T
 
+# Calculating Alpha and Beta of Portfolios
+nifty = yf.download("^NSEI",start=start - pd.DateOffset(days=5), end=end)["Close"]
+nifty_m_ret = nifty.resample("ME").last().pct_change().dropna()
+
+b_mom, a_mom = np.polyfit(x=nifty_m_ret["^NSEI"], y=mom_m_ret["return"],deg=1)
+b_size, a_size = np.polyfit(x=nifty_m_ret["^NSEI"], y=size_m_ret["return"],deg=1)
+b_value, a_value = np.polyfit(x=nifty_m_ret["^NSEI"], y=value_m_ret["return"],deg=1)
+
+a_mom_ann = ((a_mom + 1) ** 12)-1
+a_size_ann = ((a_size + 1) ** 12)-1
+a_value_ann = ((a_value + 1) ** 12)-1
+
+alpha_beta = pd.DataFrame(
+    {   "Alpha" : [a_mom_ann, a_size_ann, a_value_ann],
+        "Beta" : [b_mom, b_size, b_value]   },
+    index=["Momentum","Size","Value"]).T
+
 # Chart inputs
 mom_y = mom_m_ret["cum_return"]
 value_y = value_m_ret["cum_return"]
@@ -224,7 +241,8 @@ os.makedirs("output", exist_ok=True)
 fig.savefig("output/factor_returns.png", dpi=150, bbox_inches="tight")
 
 with pd.ExcelWriter("output/factor_portfolio.xlsx", engine = "xlsxwriter") as writer:
-    sharpe_ratios.to_excel(writer, sheet_name="sharpe_ratios")    
+    sharpe_ratios.to_excel(writer, sheet_name="sharpe_ratios") 
+    alpha_beta.to_excel(writer, sheet_name="alpha_beta")    
     size_p.to_excel(writer, index=False, sheet_name="size_portfolio")
     value_p.to_excel(writer, index=False, sheet_name="value_portfolio")
     mom_p.to_excel(writer, index=False, sheet_name="momentum_portfolio")
