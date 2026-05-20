@@ -246,3 +246,40 @@ with pd.ExcelWriter("output/factor_portfolio.xlsx", engine = "xlsxwriter") as wr
     size_p.to_excel(writer, index=False, sheet_name="size_portfolio")
     value_p.to_excel(writer, index=False, sheet_name="value_portfolio")
     mom_p.to_excel(writer, index=False, sheet_name="momentum_portfolio")
+
+    wb = writer.book
+
+    pct_fmt = wb.add_format({"num_format":"0.00%"})
+    dec_fmt = wb.add_format({"num_format":"0.00"})
+    header_fmt = wb.add_format({"bold":True, "bg_color":"#A3C0F1", "align":"center"})
+    bold_fmt = wb.add_format({"bold":True})
+    
+    for sheet, df in [("size_portfolio", size_p), ("value_portfolio", value_p), ("momentum_portfolio", mom_p)]:
+        ws = writer.sheets[sheet]
+        ws.set_column(0,0,20)
+        ws.set_column(1,1,8)
+        ws.set_column(2,3,20,dec_fmt)
+        ws.set_column(4,4,8.5,pct_fmt)
+
+        for col_num, col_name in enumerate(df.columns,start=0):
+            ws.write(0,col_num,col_name,header_fmt)
+        
+    ws1 = writer.sheets["sharpe_ratios"]
+    ws2 = writer.sheets["alpha_beta"]
+
+    ws1.set_column(0,0,10.5,bold_fmt)
+    ws1.set_column(2,4,14,pct_fmt)
+    ws1.set_column(1,1,10.5,dec_fmt)
+
+    for col_num, col_name in enumerate(sharpe_ratios.columns,start=1):
+        ws1.write(0,col_num,col_name,header_fmt)
+    
+    ws1.write(0,0,"Factor",header_fmt)
+
+    ws2.set_column(1,3,11,dec_fmt)
+    ws2.set_column(0,0,9,bold_fmt)
+
+    for col_num, col_name in enumerate(alpha_beta.columns, start=1):
+        ws2.write(0,col_num,col_name,header_fmt)
+
+    ws2.write(0,0,"",header_fmt)
