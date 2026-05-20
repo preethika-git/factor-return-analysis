@@ -86,3 +86,8 @@ factor-return-analysis/
 pip install -r requirements.txt
 python factor_return.py
 ```
+
+
+## Sample Output
+
+<img width="1629" height="881" alt="factor_returns" src="https://github.com/user-attachments/assets/040cdb79-27ef-4b33-b368-f31ff35389e2" />
